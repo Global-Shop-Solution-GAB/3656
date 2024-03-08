@@ -1,0 +1,143 @@
+Program.Sub.ScreenSU.Start
+gui.F_QLossReasons..create
+gui.F_QLossReasons..caption("Quote Loss Reason")
+gui.F_QLossReasons..size(4080,2415)
+gui.F_QLossReasons..position(0,0)
+gui.F_QLossReasons..event(unload,Unload)
+gui.F_QLossReasons..alwaysontop(False)
+gui.F_QLossReasons..fontname("Tahoma")
+gui.F_QLossReasons..fontsize(8)
+gui.F_QLossReasons..forecolor(0)
+gui.F_QLossReasons..fontstyle(False,False,False,False,)
+gui.F_QLossReasons..BackColor(-2147483633)
+gui.F_QLossReasons..controlbox(True)
+gui.F_QLossReasons..maxbutton(True)
+gui.F_QLossReasons..minbutton(True)
+gui.F_QLossReasons..mousepointer(0)
+gui.F_QLossReasons..moveable(True)
+gui.F_QLossReasons..sizeable(True)
+gui.F_QLossReasons..ShowInTaskBar(True)
+gui.F_QLossReasons..titlebar(True)
+gui.F_QLossReasons.lblQteNum.create(label,"",True,1725,255,1,970,200,True,0,Tahoma,8,-2147483633,0)
+gui.F_QLossReasons.lblReason.create(label,"Quote Loss Reason",True,1860,255,1,200,500,True,0,Tahoma,8,-2147483633,0)
+gui.F_QLossReasons.dlstReason.create(dropdownlist)
+gui.F_QLossReasons.dlstReason.visible(True)
+gui.F_QLossReasons.dlstReason.size(3500,330)
+gui.F_QLossReasons.dlstReason.zorder(0)
+gui.F_QLossReasons.dlstReason.position(200,700)
+gui.F_QLossReasons.dlstReason.enabled(True)
+gui.F_QLossReasons.dlstReason.fontname("Tahoma")
+gui.F_QLossReasons.dlstReason.fontsize(8)
+gui.F_QLossReasons.cmdSave.create(button)
+gui.F_QLossReasons.cmdSave.caption("Save")
+gui.F_QLossReasons.cmdSave.visible(True)
+gui.F_QLossReasons.cmdSave.size(1000,375)
+gui.F_QLossReasons.cmdSave.zorder(0)
+gui.F_QLossReasons.cmdSave.position(200,1300)
+gui.F_QLossReasons.cmdSave.enabled(True)
+gui.F_QLossReasons.cmdSave.fontname("Tahoma")
+gui.F_QLossReasons.cmdSave.fontsize(8)
+gui.F_QLossReasons.cmdSave.event(click,cmdsave_click)
+gui.F_QLossReasons.lblQnum.create(label,"Quote No:",True,760,255,1,200,200,True,0,Tahoma,8,-2147483633,0)
+
+
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+
+Variable.Global.sQuote.Declare(String)
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+'Coded by: CHANDANA
+'Project Start Date: 10/31/2011
+
+F.Intrinsic.Control.If(V.Caller.Hook,<>,17331)
+	F.Intrinsic.Control.End
+F.Intrinsic.Control.EndIf
+
+V.Local.iLossCount.Declare(Long)
+V.Local.iLossCount.Set(V.Passed.LOSS-COUNT)
+
+F.Intrinsic.Control.If(V.Local.iLossCount,>,0)
+
+	V.Global.sQuote.Set(V.Passed.QUOTE)
+	F.Intrinsic.String.LPad(V.Global.sQuote,"0",7,V.Global.sQuote)
+	'F.Intrinsic.UI.Msgbox(V.Global.sQuote)
+
+	F.ODBC.Connection!Con.OpenConnection(V.Ambient.PDSN,V.Ambient.PUser,V.Ambient.PPass)
+
+	V.Local.sSql.Declare(String)
+	V.Local.sSql.Set("select RID, Reason from ATG_3656_QteLost_Rsn order by Reason")
+	F.ODBC.Connection!Con.OpenLocalRecordsetRO("rstdlst",V.Local.sSql)
+	F.Intrinsic.Control.DoUntil(V.ODBC.Con!rstdlst.EOF,=,True)
+		Gui.F_QLossReasons.dlstReason.AddItem(V.ODBC.Con!rstdlst.FieldVal!Reason,V.ODBC.Con!rstdlst.FieldVal!RID)
+		F.ODBC.Con!rstdlst.MoveNext
+	F.Intrinsic.Control.Loop
+	F.ODBC.Con!rstdlst.Close
+
+	Gui.F_QLossReasons.lblQteNum.Caption(V.Global.sQuote)
+	F.Intrinsic.Control.CallSub(Quote_exists)
+	Gui.F_QLossReasons..Show
+
+F.Intrinsic.Control.EndIf
+
+Program.Sub.Main.End
+
+program.sub.Unload.start
+F.Intrinsic.Control.If(V.Screen.F_QLossReasons!dlstReason.ItemData,=,"")
+	F.Intrinsic.UI.Msgbox("Select a reason for Quote Loss.","Quote Loss")
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.EndIf
+
+F.ODBC.Connection!Con.Close
+F.Intrinsic.Control.End
+
+program.sub.Unload.end
+
+program.sub.cmdsave_click.start
+F.Intrinsic.Control.If(V.Screen.F_QLossReasons!dlstReason.ItemData,=,"")
+	F.Intrinsic.UI.Msgbox("Select a reason for Quote Loss.","Quote Loss")
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.EndIf
+
+V.Local.sSql.Declare(String)
+F.Intrinsic.String.Concat("select * from ATG_3656_Quotes_Lost where QuoteNo='",V.Global.sQuote,"'",V.Local.sSql)
+F.ODBC.Connection!Con.OpenLocalRecordsetRW("rstSave",V.Local.sSql)
+F.Intrinsic.Control.If(V.ODBC.Con!rstSave.EOF,=,True)
+	F.ODBC.Con!rstSave.AddNew
+	F.ODBC.Con!rstSave.Set!QuoteNo(V.Global.sQuote)
+F.Intrinsic.Control.EndIf
+F.ODBC.Con!rstSave.Set!RID(V.Screen.F_QLossReasons!dlstReason.ItemData)
+F.ODBC.Con!rstSave.Update
+F.ODBC.Con!rstSave.Close
+
+
+V.Local.sMsg.Declare(String)
+F.Intrinsic.String.Concat("Quote loss reason for ",V.Global.sQuote," is successfully saved.",V.Local.sMsg)
+F.Intrinsic.UI.Msgbox(V.Local.sMsg,"Quote Loss")
+F.Intrinsic.Control.CallSub(Unload)
+
+program.sub.cmdsave_click.end
+
+Program.Sub.Quote_Exists.Start
+V.Local.sSql.Declare(String)
+
+F.Intrinsic.String.Concat("Select R.Reason from ATG_3656_QteLost_Rsn as R Left Join ATG_3656_Quotes_Lost as L on R.RID=L.RID where L.QuoteNo='",V.Global.sQuote,"'",V.Local.sSql)
+F.ODBC.Connection!Con.OpenLocalRecordsetRO("rst",V.Local.sSql)
+F.Intrinsic.Control.If(V.ODBC.Con!rst.EOF,=,True)
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Else
+	Gui.F_QLossReasons.dlstReason.Text(V.ODBC.Con!rst.FieldVal!Reason)
+F.Intrinsic.Control.EndIf
+F.ODBC.Con!rst.Close
+
+
+Program.Sub.Quote_Exists.End
+
+Program.Sub.Comments.Start
+${$0$}$ATG_QuoteLoss_Reasons$}$MITCH$}$3/31/2016
+${$1$}$$}$$}$0$}$17337$}$Pre Notes Hook$}$3/31/2016 3:19:59 PM$}$(Program: QTE003GI; Screen: QTS060C)
+
+Program.Sub.Comments.End
+
