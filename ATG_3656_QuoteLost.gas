@@ -1,0 +1,213 @@
+Program.Sub.ScreenSU.Start
+gui.F_QuoteLost..create
+gui.F_QuoteLost..caption("Quote Loss Maintenance")
+gui.F_QuoteLost..size(6435,4080)
+gui.F_QuoteLost..position(0,0)
+gui.F_QuoteLost..event(unload,unload)
+gui.F_QuoteLost..alwaysontop(False)
+gui.F_QuoteLost..fontname("Tahoma")
+gui.F_QuoteLost..fontsize(8)
+gui.F_QuoteLost..forecolor(0)
+gui.F_QuoteLost..fontstyle(False,False,False,False,)
+gui.F_QuoteLost..BackColor(-2147483633)
+gui.F_QuoteLost..controlbox(True)
+gui.F_QuoteLost..maxbutton(True)
+gui.F_QuoteLost..minbutton(True)
+gui.F_QuoteLost..mousepointer(0)
+gui.F_QuoteLost..moveable(True)
+gui.F_QuoteLost..sizeable(True)
+gui.F_QuoteLost..ShowInTaskBar(True)
+gui.F_QuoteLost..titlebar(True)
+gui.F_QuoteLost.frmReasons.create(frame)
+gui.F_QuoteLost.frmReasons.caption("Frame")
+gui.F_QuoteLost.frmReasons.size(5820,2685)
+gui.F_QuoteLost.frmReasons.position(200,200)
+gui.F_QuoteLost.frmReasons.visible(True)
+gui.F_QuoteLost.frmReasons.borderstyle(0)
+gui.F_QuoteLost.frmReasons.fontname("Tahoma")
+gui.F_QuoteLost.frmReasons.fontsize(8)
+gui.F_QuoteLost.frmCmd.create(frame)
+gui.F_QuoteLost.frmCmd.caption("Frame")
+gui.F_QuoteLost.frmCmd.size(3210,420)
+gui.F_QuoteLost.frmCmd.position(200,3000)
+gui.F_QuoteLost.frmCmd.visible(True)
+gui.F_QuoteLost.frmCmd.borderstyle(0)
+gui.F_QuoteLost.frmCmd.fontname("Tahoma")
+gui.F_QuoteLost.frmCmd.fontsize(8)
+gui.F_QuoteLost.lblRID.create(label,"Reason ID",True,1935,255,1,0,0,True,0,Tahoma,8,-2147483633,0)
+gui.F_QuoteLost.lblRID.parent("frmreasons")
+gui.F_QuoteLost.txtRID.create(textbox,"",True,870,300,0,0,200,False,0,Tahoma,8,-2147483643,1)
+gui.F_QuoteLost.txtRID.parent("frmreasons")
+gui.F_QuoteLost.cmdRID.create(button)
+gui.F_QuoteLost.cmdRID.caption("^")
+gui.F_QuoteLost.cmdRID.visible(True)
+gui.F_QuoteLost.cmdRID.size(315,315)
+gui.F_QuoteLost.cmdRID.zorder(0)
+gui.F_QuoteLost.cmdRID.position(900,200)
+gui.F_QuoteLost.cmdRID.enabled(True)
+gui.F_QuoteLost.cmdRID.parent("frmreasons")
+gui.F_QuoteLost.cmdRID.fontname("Tahoma")
+gui.F_QuoteLost.cmdRID.fontsize(8)
+gui.F_QuoteLost.cmdRID.event(click,cmdrid_click)
+gui.F_QuoteLost.lblReason.create(label,"Reason",True,1935,255,1,1300,0,True,0,Tahoma,8,-2147483633,0)
+gui.F_QuoteLost.lblReason.parent("frmreasons")
+gui.F_QuoteLost.txtReason.create(textbox,"",True,4500,300,0,1300,200,True,0,Tahoma,8,-2147483643,1)
+gui.F_QuoteLost.txtReason.parent("frmreasons")
+gui.F_QuoteLost.txtReason.maxLength(100)
+gui.F_QuoteLost.txtReason.event(lostfocus,txtreason_lostfocus)
+gui.F_QuoteLost.lblNotes.create(label,"Notes",True,1935,255,1,0,600,True,0,Tahoma,8,-2147483633,0)
+gui.F_QuoteLost.lblNotes.parent("frmreasons")
+gui.F_QuoteLost.mltxtNotes.create(textboxm)
+gui.F_QuoteLost.mltxtNotes.text("")
+gui.F_QuoteLost.mltxtNotes.visible(True)
+gui.F_QuoteLost.mltxtNotes.size(5800,1860)
+gui.F_QuoteLost.mltxtNotes.zorder(0)
+gui.F_QuoteLost.mltxtNotes.position(0,800)
+gui.F_QuoteLost.mltxtNotes.enabled(True)
+gui.F_QuoteLost.mltxtNotes.alignment(0)
+gui.F_QuoteLost.mltxtNotes.parent("frmreasons")
+gui.F_QuoteLost.mltxtNotes.fontname("Tahoma")
+gui.F_QuoteLost.mltxtNotes.fontsize(8)
+gui.F_QuoteLost.mltxtNotes.BackColor(-2147483643)
+gui.F_QuoteLost.cmdSave.create(button)
+gui.F_QuoteLost.cmdSave.caption("Save")
+gui.F_QuoteLost.cmdSave.visible(True)
+gui.F_QuoteLost.cmdSave.size(1000,375)
+gui.F_QuoteLost.cmdSave.zorder(0)
+gui.F_QuoteLost.cmdSave.position(0,0)
+gui.F_QuoteLost.cmdSave.enabled(True)
+gui.F_QuoteLost.cmdSave.parent("frmcmd")
+gui.F_QuoteLost.cmdSave.fontname("Tahoma")
+gui.F_QuoteLost.cmdSave.fontsize(8)
+gui.F_QuoteLost.cmdSave.event(click,cmdsave_click)
+gui.F_QuoteLost.cmdDelete.create(button)
+gui.F_QuoteLost.cmdDelete.caption("Delete")
+gui.F_QuoteLost.cmdDelete.visible(True)
+gui.F_QuoteLost.cmdDelete.size(1000,375)
+gui.F_QuoteLost.cmdDelete.zorder(0)
+gui.F_QuoteLost.cmdDelete.position(1050,0)
+gui.F_QuoteLost.cmdDelete.enabled(True)
+gui.F_QuoteLost.cmdDelete.parent("frmcmd")
+gui.F_QuoteLost.cmdDelete.fontname("Tahoma")
+gui.F_QuoteLost.cmdDelete.fontsize(8)
+gui.F_QuoteLost.cmdDelete.event(click,cmddelete_click)
+gui.F_QuoteLost.cmdClear.create(button)
+gui.F_QuoteLost.cmdClear.caption("Clear")
+gui.F_QuoteLost.cmdClear.visible(True)
+gui.F_QuoteLost.cmdClear.size(1000,375)
+gui.F_QuoteLost.cmdClear.zorder(0)
+gui.F_QuoteLost.cmdClear.position(2100,0)
+gui.F_QuoteLost.cmdClear.enabled(True)
+gui.F_QuoteLost.cmdClear.parent("frmcmd")
+gui.F_QuoteLost.cmdClear.fontname("Tahoma")
+gui.F_QuoteLost.cmdClear.fontsize(8)
+gui.F_QuoteLost.cmdClear.event(click,cmdclear_click)
+
+
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+'Coded by: CHANDANA
+'Project Start Date: 10/28/2011
+
+F.ODBC.Connection!Con.OpenConnection(V.Ambient.PDSN,V.Ambient.PUser,V.Ambient.PPass)
+
+Gui.F_QuoteLost..Show
+
+Program.Sub.Main.End
+
+program.sub.unload.start
+F.ODBC.Connection!Con.Close
+F.Intrinsic.Control.End
+
+
+program.sub.unload.end
+
+program.sub.txtreason_lostfocus.start
+V.Local.sSql.Declare(String)
+V.Local.sReason.Declare(String)
+
+V.Local.sReason.Set(v.Screen.F_QuoteLost!txtReason.Text.Trim)
+F.Intrinsic.String.Concat("select Rid, Reason, Notes from ATG_3656_QteLost_Rsn where reason='",V.Local.sReason.PSQLFriendly,"'",V.Local.sSql)
+
+F.ODBC.Connection!Con.OpenRecordsetRO("rst",V.Local.sSql)
+F.Intrinsic.Control.If(V.ODBC.Con!rst.EOF,=,False)
+	Gui.F_QuoteLost.mltxtNotes.Text(V.ODBC.Con!rst.FieldVal!Notes)
+	Gui.F_QuoteLost.txtRID.Text(V.ODBC.Con!rst.FieldVal!RID)
+F.Intrinsic.Control.EndIf
+F.ODBC.Con!rst.Close
+
+
+program.sub.txtreason_lostfocus.end
+
+program.sub.cmdsave_click.start
+V.Local.sSql.Declare(String)
+V.Local.iRID.Declare(Long)
+
+F.Intrinsic.Control.If(V.Screen.F_QuoteLost!txtReason.Text.Trim,=,"")
+	F.Intrinsic.UI.Msgbox("Enter a Quote Loss Reason","Quote Loss Reasons")
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.EndIf
+
+V.Local.iRID.Set(V.Screen.F_QuoteLost!txtRID.Text)
+F.Intrinsic.String.Concat("select * from ATG_3656_QteLost_Rsn where RID='",V.Local.iRID.Trim,"'",V.Local.sSql)
+F.ODBC.Connection!Con.OpenLocalRecordsetRW("rstSave",V.Local.sSql)
+F.Intrinsic.Control.If(V.ODBC.Con!rstSave.EOF,=,True)
+	F.ODBC.Con!rstSave.AddNew
+	F.ODBC.Con!rstSave.Set!Reason(V.Screen.F_QuoteLost!txtReason.Text.Trim)
+	F.ODBC.Con!rstSave.Set!Notes(V.Screen.F_QuoteLost!mltxtNotes.Text.Trim)
+F.Intrinsic.Control.Else
+	F.ODBC.Con!rstSave.Set!Reason(V.Screen.F_QuoteLost!txtReason.Text.Trim)
+	F.ODBC.Con!rstSave.Set!Notes(V.Screen.F_QuoteLost!mltxtNotes.Text.Trim)
+F.Intrinsic.Control.EndIf
+F.ODBC.Con!rstSave.Update
+F.ODBC.Con!rstSave.Close
+
+F.Intrinsic.Control.CallSub(Cmdclear_click)
+
+program.sub.cmdsave_click.end
+
+program.sub.cmdrid_click.start
+V.Local.sSql.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sTitles.Declare(String)
+V.Local.iWidths.Declare(Long)
+
+F.Intrinsic.String.Split("RID*!*Reason*!*Notes","*!*",V.Local.sTitles)
+F.Intrinsic.String.Split("0*!*3000*!*5000","*!*",V.Local.iWidths)
+V.Local.sSql.Set("select RID, Reason, Notes from ATG_3656_QteLost_Rsn")
+
+F.Intrinsic.UI.Browser("Quote Loss Reasons","Con",V.Local.sSql,V.Local.sTitles,V.Local.iWidths,9000,1000,V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet,<>,"***CANCEL***")
+	F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+	Gui.F_QuoteLost.txtRID.Text(V.Local.sRet(0))
+	Gui.F_QuoteLost.txtReason.Text(V.Local.sRet(1))
+	Gui.F_QuoteLost.mltxtNotes.Text(V.Local.sRet(2))
+F.Intrinsic.Control.EndIf
+
+program.sub.cmdrid_click.end
+
+program.sub.cmddelete_click.start
+V.Local.sSql.Declare(String)
+V.Local.iRID.Declare(Long)
+
+V.Local.iRID.Set(V.Screen.F_QuoteLost!txtRID.Text)
+F.Intrinsic.String.Concat("Delete from ATG_3656_QteLost_Rsn where RID='",V.Local.iRID.Trim,"'",V.Local.sSql)
+F.ODBC.Connection!Con.Execute(V.Local.sSql)
+
+F.Intrinsic.Control.CallSub(Cmdclear_click)
+
+program.sub.cmddelete_click.end
+
+program.sub.cmdclear_click.start
+Gui.F_QuoteLost.txtRID.Text("")
+Gui.F_QuoteLost.txtReason.Text("")
+Gui.F_QuoteLost.mltxtNotes.Text("")
+
+program.sub.cmdclear_click.end
+
+
